@@ -116,6 +116,7 @@ public class BoardDaoImpl implements BoardDao {
             while(rs.next()){
                 count = rs.getInt("count(*)");
             }
+
         } catch(Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -177,7 +178,7 @@ public class BoardDaoImpl implements BoardDao {
             ps = conn.prepareStatement(sql);
             ps.setLong(1, id);
             result = ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
-            System.out.println(sql);
+
         }catch(Exception ex){
             ex.printStackTrace();
         }finally {
@@ -223,11 +224,6 @@ public class BoardDaoImpl implements BoardDao {
                 System.out.println(conn.getClass().getName());
             }
             switch(str) {
-                case "all" :
-                sql = "SELECT A.seq,A.user_id,B.name,A.title,A.content,A.reg_date,A.hit FROM board A";
-                sql += " LEFT JOIN user B ON A.user_id=B.id";
-                break;
-
                 case "subject" :
                 sql = "SELECT A.seq,A.user_id,B.name,A.title,A.content,A.reg_date,A.hit FROM board A";
                 sql += " LEFT JOIN user B ON A.user_id=B.id WHERE A.title like ? ORDER BY A.seq desc";
@@ -238,6 +234,9 @@ public class BoardDaoImpl implements BoardDao {
                 sql += " LEFT JOIN user B ON A.user_id=B.id WHERE A.content like ? ORDER BY A.seq desc";
                 break;
             }
+            String splitSql[] = sql.split("FROM");
+            System.out.println(splitSql[1]);
+
             ps = conn.prepareStatement(sql);
             ps.setString(1,"%"+keyword+"%");
             rs = ps.executeQuery();
