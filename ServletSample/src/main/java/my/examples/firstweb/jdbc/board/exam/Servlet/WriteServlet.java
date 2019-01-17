@@ -2,7 +2,9 @@ package my.examples.firstweb.jdbc.board.exam.Servlet;
 
 import my.examples.firstweb.jdbc.board.exam.dao.BoardDaoImpl;
 import my.examples.firstweb.jdbc.board.exam.dto.Board;
-import my.examples.firstweb.jdbc.board.exam.util.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.dao.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.service.BoardService;
+import my.examples.firstweb.jdbc.board.exam.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "WriteServlet", urlPatterns = "/write")
 public class WriteServlet extends HttpServlet {
@@ -20,6 +23,7 @@ public class WriteServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String mode = req.getParameter("mode");
         String seq = req.getParameter("seq");
+        BoardService boardService = new BoardServiceImpl();
 
         Long id = 0L;
         try {
@@ -28,8 +32,7 @@ public class WriteServlet extends HttpServlet {
             //redirect;
         }
 
-        BoardDao boardDao = new BoardDaoImpl();
-        Board board = boardDao.getBoard(id);
+        Board board = boardService.getBoard(id);
 
         req.setAttribute("mode",mode);
         req.setAttribute("seq",id);
@@ -46,7 +49,7 @@ public class WriteServlet extends HttpServlet {
         String title = req.getParameter("title");
         String content = req.getParameter("content");
         String mode = req.getParameter("mode");
-        BoardDao boardDao = new BoardDaoImpl();
+        BoardService boardService = new BoardServiceImpl();
 
         int result = 0;
         System.out.println(mode);
@@ -54,7 +57,8 @@ public class WriteServlet extends HttpServlet {
         if(mode.equals("write")) {
             String id = req.getParameter("userID");
             Board board = new Board(id, title, content);
-            result = boardDao.addBoard(board);
+            result = boardService.addBoard(board);
+
             if(result == 0) {
                 System.out.println("실패!!");
             }
@@ -62,7 +66,7 @@ public class WriteServlet extends HttpServlet {
             String num = req.getParameter("seq");
             System.out.println(num);
             Long id = Long.parseLong(num);
-            boardDao.updateBoard(id,title,content);
+            boardService.updateBoard(id,title,content);
         }
 
         req.setAttribute("result",result);

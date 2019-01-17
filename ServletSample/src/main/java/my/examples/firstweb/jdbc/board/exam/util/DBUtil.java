@@ -26,10 +26,11 @@ public class DBUtil {
         return instance;
     }
 
-    public static Connection getConnection(){
+    public Connection getConnection(){
         Connection conn = null;
         try {
             conn = ds.getConnection();
+            conn.setAutoCommit(false);
         }catch(Exception ex){
             ex.printStackTrace(); // 로그를 남기는 코드가 있어야 한다.
             throw new RuntimeException("DB연결을 할 수 없습니다.");
@@ -37,13 +38,26 @@ public class DBUtil {
         return conn;
     }
 
-    public static void close(ResultSet rs, PreparedStatement ps, Connection conn) {
-        try { rs.close(); } catch(Exception ignore) {}
-        close(ps,conn);
+    public static void rollback(Connection conn) {
+        try { conn.rollback(); } catch(Exception ignore) {}
     }
 
-    public static void close(PreparedStatement ps, Connection conn) {
-        try { ps.close(); } catch(Exception ignore) {}
-        try { conn.close(); } catch(Exception ignore) {}
+    public static void close(Connection conn){
+        try{ conn.close();
+            System.out.println("커넥션 클로즈");
+        } catch(Exception ignore){}
+    }
+
+    public static void close(ResultSet rs, PreparedStatement ps){
+        try{ rs.close();
+            System.out.println("리절트셋 클로즈");
+        } catch(Exception ignore){} finally {
+            close(ps);
+            System.out.println("ps 클로즈");
+        }
+    }
+
+    public static void close(PreparedStatement ps){
+        try{ ps.close(); } catch(Exception ignore){}
     }
 }

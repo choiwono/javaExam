@@ -2,7 +2,9 @@ package my.examples.firstweb.jdbc.board.exam.Servlet;
 
 import my.examples.firstweb.jdbc.board.exam.dao.BoardDaoImpl;
 import my.examples.firstweb.jdbc.board.exam.dto.Board;
-import my.examples.firstweb.jdbc.board.exam.util.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.dao.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.service.BoardService;
+import my.examples.firstweb.jdbc.board.exam.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,8 +30,8 @@ import java.io.IOException;
                 // 오류 화면으로 redirect
                 return;
             }
-            BoardDao boardDao = new BoardDaoImpl();
-            Board board = boardDao.getBoard(seq);
+            BoardService boardService = new BoardServiceImpl();
+            Board board = boardService.getBoard(seq);
 
             if(board == null){
                 // 오류 화면으로 redirect
@@ -38,8 +40,6 @@ import java.io.IOException;
             req.setAttribute("board", board);
             req.setAttribute("page", page);
             req.setAttribute("mode",mode);
-
-            boardDao.updateCount(seq);
 
             RequestDispatcher requestDispatcher =
                     req.getRequestDispatcher("/WEB-INF/views/view.jsp");

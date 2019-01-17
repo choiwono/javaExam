@@ -1,8 +1,9 @@
 package my.examples.firstweb.jdbc.board.exam.Servlet;
 
-import my.examples.firstweb.jdbc.board.exam.dao.BoardDaoImpl;
 import my.examples.firstweb.jdbc.board.exam.dto.Board;
-import my.examples.firstweb.jdbc.board.exam.util.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.dto.BoardList;
+import my.examples.firstweb.jdbc.board.exam.service.BoardService;
+import my.examples.firstweb.jdbc.board.exam.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,36 +22,30 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. page 값을 파라미터로 읽어들인다. 값이 없으면 기본값은 1페이지로 한다.
-
-        BoardDao boardDao = new BoardDaoImpl();
-        List<Board> boards = new ArrayList<>();
         String pageStr = req.getParameter("page");
-        String tbName = "board"; // 테이블명 지정
-
         String search = req.getParameter("search");
         String keyword = req.getParameter("keyword");
+
+        BoardList boards = new BoardList();
+        BoardService boardService = new BoardServiceImpl();
 
         int page = 1;
         try{
             page = Integer.parseInt(pageStr);
         } catch(Exception ignore){}
 
-        int start = page * size - size;
-        int limit = size;
-
-        if(search != null) {
-            boards = boardDao.searchList(search,keyword);
+        if(search != null && keyword != null) {
+            boards = boardService.searchList(search,keyword);
         } else {
-            boards = boardDao.getBoards(start, limit);
+            boards = boardService.getBoards(page);
         }
 
-        int totalCount = boardDao.totalCount(tbName); // 총 리스트 카운트
-        int totalPage = totalCount / size; // 총페이지
-
-        if(totalCount % size > 0) { // 총페이지 카운트 ++
+        int totalCnt = boards.getTotalCount(); // 총페이지값 받아오기
+        int totalPage =  totalCnt / size;
+        if(totalCnt % size > 0) {
             totalPage++;
         }
-
+        //int totalPage = 3;
         req.setAttribute("page",page); // 페이지
         req.setAttribute("boards", boards); // 게시판정보
         req.setAttribute("totalPage",totalPage); // 총페이지

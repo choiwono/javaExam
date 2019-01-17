@@ -1,7 +1,9 @@
 package my.examples.firstweb.jdbc.board.exam.Servlet;
 
 import my.examples.firstweb.jdbc.board.exam.dao.BoardDaoImpl;
-import my.examples.firstweb.jdbc.board.exam.util.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.dao.BoardDao;
+import my.examples.firstweb.jdbc.board.exam.service.BoardService;
+import my.examples.firstweb.jdbc.board.exam.service.BoardServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +24,8 @@ public class DeleteServlet extends HttpServlet {
         }catch(Exception ex){
             // id가 잘못되었을 경우엔 에러페이지로 이동.
         }
-        BoardDao boardDao = new BoardDaoImpl();
-        int result = boardDao.deleteBoard(id);
+        BoardService boardService = new BoardServiceImpl();
+        int result = boardService.deleteBoard(id);
         if(result == 0) {
             System.out.println("삭제가 실패하셨습니다.");
         }
