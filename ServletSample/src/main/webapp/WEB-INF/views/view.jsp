@@ -33,22 +33,11 @@
         <div class="col-sm-12 col-sm-offset-0 toppad" >
             <div class="panel panel-default">
                 <div id="article-heading">
-                    <c:choose>
-                        <c:when test="${mode != 'modify'}">
-                            <h3 class="article-subject">${board.title}</h3>
-                            <div class="article-name">
-                                <span>${board.userName}</span>
-                                <span>${board.regDate}</span>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <h3 class="article-subject"><input type="text" name="title" value="${board.title}"/></h3>
-                            <div class="article-name">
-                                <span>${board.userName}</span>
-                                <span>${board.regDate}</span>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
+                    <h3 class="article-subject">${board.title}</h3>
+                    <div class="article-name">
+                        <span>${board.name}</span>
+                        <span>${board.regdate}</span>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -64,8 +53,10 @@
                             </table>
                             <div class="article-footer">
                                 <a href="/list?page=${page}" class="btn btn-primary">목록</a>
-                                <a href="/write?mode=modify&seq=${board.seq}" class="btn btn-primary">수정</a>
-                                <a href="/delete?seq=${board.seq}" class="btn btn-primary">삭제</a>
+                                <c:if test="${sessionScope.logininfo.getEmail() eq board.email}">
+                                <a href="/modify?id=${board.id}" class="btn btn-primary">수정</a>
+                                <a href="/delete?id=${board.id}" class="btn btn-primary">삭제</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>

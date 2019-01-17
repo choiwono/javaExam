@@ -25,29 +25,22 @@
                         <div class="card-body-center">
                             <form name="my-form" action="/write" method="post">
                                 <div class="form-group row">
-                                    <label for="present_address" class="col-md-2 col-form-label text-md-right">아이디</label>
+                                    <label for="present_address" class="col-md-2 col-form-label text-md-right">닉네임</label>
                                     <div class="col-md-9">
-                                        <c:if test="${mode eq 'modify'}">
-                                            <input type="hidden" name="mode" value="${mode}"/>
-                                            <input type="hidden" name="seq" value="${seq}" />
-                                            <input type="text" name="userID" id="present_address" value="${board.userID}" class="form-control" readonly>
-                                        </c:if>
-                                        <c:if test="${mode ne 'modify'}">
-                                            <input type="hidden" name="mode" value="write"/>
-                                            <input type="text" name="userID" id="present_address" value="${board.userID}" class="form-control">
-                                        </c:if>
+                                        <input type="text" name="name" id="present_address" class="form-control"/>
+                                        <input type="hidden" name="id" value="${sessionScope.logininfo.getEmail()}"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="title" class="col-md-2 col-form-label text-md-right">제목</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="title" id="title" value="<c:if test="${mode eq 'modify'}">${board.title}</c:if>" class="form-control">
+                                        <input type="text" name="title" id="title" value="" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="content" class="col-md-2 col-form-label text-md-right">내용</label>
                                     <div class="col-md-9">
-                                        <textarea class="form-control" name="content" id="content" rows="8"><c:if test="${mode eq 'modify'}">${board.content}</c:if></textarea>
+                                        <textarea class="form-control" name="content" id="content" rows="8"></textarea>
                                     </div>
                                 </div>
                         <div class ="d-flex flex-row-reverse">
@@ -65,6 +58,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </main>
 

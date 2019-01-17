@@ -64,7 +64,7 @@ public class BoardDaoImpl implements BoardDao {
                 try(ResultSet rs = ps.executeQuery()){
                     //String splitSql[] = sql.split("FROM"); // 0 프롬앞, 1 프롬뒤
                     //int cnt = totalCount(splitSql[1]);
-
+                    "SELECT A.seq,A.user_id,B.name,A.title,A.content,A.reg_date,A.hit
                     while (rs.next()) {
                         long num = rs.getLong(1);
                         String userID = rs.getString(2);

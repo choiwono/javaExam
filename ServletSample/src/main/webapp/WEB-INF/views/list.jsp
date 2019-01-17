@@ -49,14 +49,14 @@
                         <th>조회수</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.boards}" var="board">
-                            <tr>
-                                <td>${board.seq}</td>
-                                <td><a href="/view?seq=${board.seq}&page=${page}">${board.title}</a></td>
-                                <td>${board.userName}</td>
-                                <td>${board.regDate}</td>
-                                <td>${board.hit}</td>
-                            </tr>
+                            <c:forEach items="${boards}" var="board">
+                                <tr>
+                                    <td>${board.id}</td>
+                                    <td><a href="/read?id=${board.id}">${board.title}</a></td>
+                                    <td>${board.name}</td>
+                                    <td>${board.regdate}</td>
+                                    <td>${board.readCount}</td>
+                                </tr>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -66,7 +66,7 @@
         <div>
             <form class="form-inline" action="/list" method="get">
                 <select name="search" class="form-control" id="inlineFormInput">
-                    <option value="subject">제목</option>
+                    <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
 
