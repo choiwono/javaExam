@@ -18,19 +18,14 @@ import java.io.IOException;
 public class ModifyformServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("logininfo");
         String idStr = req.getParameter("id");
         Long id = 0L;
-
-        if(user == null){
-            System.out.println("-_-;;;;; 로그인 부탁!!");
-            resp.sendRedirect("/login");
-            return;
-        } else {
+        try {
             id = Long.parseLong(idStr);
-            System.out.println("로그인 OK");
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
+
         BoardService boardService = new BoardServiceImpl();
         Board board = boardService.getBoard(id);
         req.setAttribute("board", board);
@@ -43,13 +38,22 @@ public class ModifyformServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        String idStr = req.getParameter("id");
         String name = req.getParameter("name");
         String title = req.getParameter("title");
         String content = req.getParameter("content");
-        Long id = Long.parseLong(req.getParameter("id"));
+        String email = req.getParameter("email");
+
+        Long id=0L;
+
+        try {
+            id = Long.parseLong(idStr);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
 
         BoardService boardService = new BoardServiceImpl();
-        Board board = new Board(title, content, name, id);
+        Board board = new Board(title, content, name, email, id);
 
         boardService.updateBoard(board);
         resp.sendRedirect("/list");

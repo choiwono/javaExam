@@ -28,7 +28,9 @@
                                     <label for="present_address" class="col-md-2 col-form-label text-md-right">닉네임</label>
                                     <div class="col-md-9">
                                         <input type="hidden" name="id" value="${board.id}"/>
-                                        <input type="text" name="name" value="${board.name}" id="present_address" class="form-control"/>
+                                        <input type="hidden" name="email" value="${sessionScope.logininfo.email}" />
+                                        <input type="hidden" name="name" value="${sessionScope.logininfo.name}"/>
+                                        <input value="${board.name}" id="present_address" class="form-control" disabled/>
                                     </div>
                                 </div>
                                 <div class="form-group row">

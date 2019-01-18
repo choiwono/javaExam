@@ -14,6 +14,7 @@
 <form method="post" action="/login">
     email : <input type="text" name="email" size="20"><br>
     password : <input type="password" name="passwd" size="20"><br>
+    <input type="hidden" value="${redirect}" name="redirect" />
     <input type="submit">
 </form>
 </body>

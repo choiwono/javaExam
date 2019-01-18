@@ -17,17 +17,21 @@ public class Board {
         this.readCount = 0;
     }
 
-    public Board(String title, String content, String name, Long id) {
+    public Board(String title, String content, String name, String email) {
         this();
         this.title = title;
         this.content = content;
         this.name = name;
+        this.email = email;
+    }
+
+    public Board(String title, String content, String name, String email,Long id) {
+        this(title,content,name,email);
         this.id = id;
     }
 
     public Board(Long id, String title, String content, String name, Date regdate, int readCount,String email) {
-        this(title, content, name, id);
-        this.email = email;
+        this(title, content, name, email);
         this.id = id;
         this.regdate = regdate;
         this.readCount = readCount;

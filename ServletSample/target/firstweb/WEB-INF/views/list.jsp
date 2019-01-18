@@ -31,6 +31,7 @@
             .page-link > a {
                 height:34px;
             }
+
         </style>
         <%@include file="navbar.jsp"%>
     </head>

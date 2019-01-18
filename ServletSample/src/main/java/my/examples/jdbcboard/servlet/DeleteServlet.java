@@ -22,8 +22,6 @@ public class DeleteServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 로그인한 관리자인가? 관리자일경우에만 실행.
-        HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("logininfo");
 
         Long id = 0L;
         try{

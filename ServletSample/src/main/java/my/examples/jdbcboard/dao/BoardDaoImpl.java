@@ -120,8 +120,54 @@ public class BoardDaoImpl implements BoardDao{
     }
 
     @Override
-    public void updateBoard(Board board) {
+    public Long getLastInsertId() {
+        Long lastId = 0L;
 
+        Connection conn = ConnectionContextHolder.getConnection();
+        try{
+            try(PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.SELECT_LAST_INSERT_ID);) {
+                try(ResultSet rs = ps.executeQuery();){
+                    if (rs.next()) {
+                        lastId = rs.getLong(1);
+                    }
+                }
+            }
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return lastId;
+    }
+
+    @Override
+    public void updateLastInsertId(Long id) {
+        try{
+            Connection conn = ConnectionContextHolder.getConnection();
+            try(PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.UPDATE_LAST_INSERT_ID);) {
+                ps.setLong(1, id);
+                ps.setLong(2, id);
+                ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateBoard(Board board) {
+        try{
+            Connection conn = ConnectionContextHolder.getConnection();
+            try(PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.UPDATE_BY_BOARD);) {
+                System.out.println(BoardDaoSQL.UPDATE_BY_BOARD);
+                ps.setString(1,board.getTitle());
+                ps.setString(2,board.getContent());
+                ps.setLong(3,board.getId());
+                ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+                //System.out.println(BoardDaoSQL.UPDATE_BY_BOARD);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override

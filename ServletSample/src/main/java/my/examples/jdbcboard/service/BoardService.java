@@ -14,4 +14,5 @@ public interface BoardService {
     public void deleteBoard(Long id);
     void updateBoard(Board board);
     void addBoard(Board board);
+
 }

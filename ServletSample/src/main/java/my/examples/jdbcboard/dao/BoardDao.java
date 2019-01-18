@@ -15,4 +15,8 @@ public interface BoardDao {
 
     void updateReadCount(long id);
     void updateBoard(Board board);
+
+    Long getLastInsertId();
+
+    void updateLastInsertId(Long lastInsertId);
 }

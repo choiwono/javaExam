@@ -19,6 +19,9 @@ import java.io.IOException;
 public class UserLoginSerlvet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String redirectUrl = req.getParameter("redirect");
+
+        req.setAttribute("redirect",redirectUrl);
         RequestDispatcher requestDispatcher =
                 req.getRequestDispatcher("/WEB-INF/views/loginform.jsp");
         requestDispatcher.forward(req, resp);
@@ -29,6 +32,7 @@ public class UserLoginSerlvet extends HttpServlet{
         req.setCharacterEncoding("UTF-8");
         String email = req.getParameter("email");
         String passwd = req.getParameter("passwd");
+        String redirect = req.getParameter("redirect");
 
         UserService userService = UserServiceImpl.getInstance();
         User user = userService.getUserByEmail(email);
@@ -40,13 +44,15 @@ public class UserLoginSerlvet extends HttpServlet{
                 // 로그인정보를 세션에 저장.
                 HttpSession session = req.getSession();
                 session.setAttribute("logininfo", user);
+                //session.setAttribute("redirectUrl",redirect);
+
                 System.out.println("암호가 맞아요.");
-            }else{
+            } else {
                 // 암호가 틀렸어요.
                 System.out.println("암호가 틀렸어요.");
             }
         }
         // 로그인 성공했다면
-        resp.sendRedirect("/list");
+        resp.sendRedirect(redirect);
     }
 }

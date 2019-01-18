@@ -4,8 +4,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-
-        <!-- BRAND -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -27,7 +25,9 @@
             </ul>
 
             <!-- Button -->
-            <button type="button" class="btn btn-default navbar-btn navbar-right">Sign in</button>
+            <button type="button" class="btn btn-default navbar-btn navbar-right">
+                <a href="/login">로그인</a>
+            </button>
 
         </div>
 

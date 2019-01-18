@@ -23,8 +23,6 @@ public class ReadServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idStr = req.getParameter("id");
         Long id = 0L;
-        HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("logininfo");
 
         try{
             id = Long.parseLong(idStr);
