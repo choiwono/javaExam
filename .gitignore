@@ -86,3 +86,9 @@ fabric.properties
 .idea/httpRequests
 .idea
 *.iml
+ServletSample/target/firstweb/WEB-INF/classes/META-INF/ServletSample.kotlin_module
+ServletSample/target/firstweb/META-INF/MANIFEST.MF
+ServletSample/src/main/java/my/examples/jdbcboard/filter/RequestEncodingFilter.java
+simpleServlet/src/main/webapp/WEB-INF/web.xml
+ServletSample/target/classes/META-INF/ServletSample.kotlin_module
+simpleServlet/pom.xml
