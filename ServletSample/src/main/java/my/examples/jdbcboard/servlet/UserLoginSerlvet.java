@@ -34,6 +34,10 @@ public class UserLoginSerlvet extends HttpServlet{
         String passwd = req.getParameter("passwd");
         String redirect = req.getParameter("redirect");
 
+        if(redirect == null) { // redirect경로가 없을경우 무조건 list 페이지로 이동
+            redirect = "/list";
+        }
+
         UserService userService = UserServiceImpl.getInstance();
         User user = userService.getUserByEmail(email);
         if(user.getPasswd() != null){
@@ -44,8 +48,6 @@ public class UserLoginSerlvet extends HttpServlet{
                 // 로그인정보를 세션에 저장.
                 HttpSession session = req.getSession();
                 session.setAttribute("logininfo", user);
-                //session.setAttribute("redirectUrl",redirect);
-
                 System.out.println("암호가 맞아요.");
             } else {
                 // 암호가 틀렸어요.

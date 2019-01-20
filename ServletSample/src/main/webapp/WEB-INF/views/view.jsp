@@ -53,6 +53,7 @@
                             </table>
                             <div class="article-footer">
                                 <a href="/list?page=${page}" class="btn btn-primary">목록</a>
+                                <a href="/rewrite?id=${board.id}" class="btn btn-primary">답글</a>
                                 <c:if test="${sessionScope.logininfo.getEmail() eq board.email}">
                                 <a href="/modify?id=${board.id}" class="btn btn-primary">수정</a>
                                 <a href="/delete?id=${board.id}" class="btn btn-primary">삭제</a>

@@ -13,22 +13,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ListServlet", urlPatterns = "/list")
 public class ListServlet extends HttpServlet {
-    private static final int SIZE = 3; // 설정파일에서 읽어들이도록 수정한다.
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. page 값을 파라미터로 읽어들인다. 값이 없으면 기본값은 1페이지로 한다.
         String pageStr = req.getParameter("page");
+        String search = req.getParameter("search");
+        String keyword = req.getParameter("keyword");
+
+        BoardService boardService = new BoardServiceImpl();
+        List<Board> boards = new ArrayList<>();
+        final int SIZE = 10;
         int page = 1;
+        int totalPage = 1;
+        int totalCount = 1;
         try{
             page = Integer.parseInt(pageStr);
         }catch(Exception ignore){}
-        BoardService boardService = new BoardServiceImpl();
-        List<Board> boards = boardService.getBoards(page);
+
+        if(search != null && keyword != null) { //검색 옵션과 검색할 내용이 둘다 있을경우
+            boards = boardService.searchBoards(search,keyword,page);
+            totalCount = boardService.getSearchTotalPage(search,keyword);
+        } else {
+            boards = boardService.getBoards(page);
+            totalCount = boardService.getTotalPage();
+        }
+
+        totalPage = totalCount / SIZE;
+        if(totalCount % SIZE > 0) {
+            totalPage++;
+        }
+
         req.setAttribute("boards", boards);
+        req.setAttribute("page", page);
+        req.setAttribute("totalPage",totalPage);
+        req.setAttribute("search",search);
+        req.setAttribute("keyword",keyword);
 
         RequestDispatcher requestDispatcher =
                 req.getRequestDispatcher("/WEB-INF/views/list.jsp");

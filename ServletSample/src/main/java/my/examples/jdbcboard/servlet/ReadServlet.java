@@ -33,6 +33,7 @@ public class ReadServlet extends HttpServlet {
 
         BoardService boardService = new BoardServiceImpl();
         Board board = boardService.getBoard(id);
+        board.setContent(board.getContent().replaceAll("\n","<br>\n"));
         req.setAttribute("board", board);
 
         RequestDispatcher requestDispatcher =

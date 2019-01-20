@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -25,10 +25,19 @@
             </ul>
 
             <!-- Button -->
-            <button type="button" class="btn btn-default navbar-btn navbar-right">
-                <a href="/login">로그인</a>
-            </button>
-
+            <c:if test="${sessionScope.logininfo eq null}">
+                <button type="button" class="btn btn-default navbar-btn navbar-right">
+                    <a href="/login">로그인</a>
+                </button>
+            </c:if>
+            <c:if test="${sessionScope.logininfo ne null}">
+                <button type="button" class="btn btn-default navbar-btn navbar-right">
+                    <a href="/logout">로그아웃</a>
+                </button>
+                <button type="button" style="pointer-events:none; margin-right:10px;" class="btn btn-default navbar-btn navbar-right">
+                    <span>${sessionScope.logininfo.name}</span>
+                </button>
+            </c:if>
         </div>
 
     </div>

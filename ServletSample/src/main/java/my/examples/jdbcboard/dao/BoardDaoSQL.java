@@ -2,10 +2,13 @@ package my.examples.jdbcboard.dao;
 
 public class BoardDaoSQL {
     public static final String SELECT_BY_ID =
-            "SELECT A.id,A.title,A.content,A.nickname,A.regdate,A.read_count,A.user_id FROM board A LEFT JOIN USER B ON A.id=B.id WHERE A.id=?";
+            "SELECT A.id,A.title,A.content,A.nickname,A.regdate,A.read_count,A.user_id,A.group_no,"+
+                    "A.group_seq,A.group_depth FROM board A LEFT JOIN USER B ON A.id=B.id WHERE A.id=?";
 
     public static final String SELECT_BY_PAGING =
-            "SELECT A.id,A.title,A.content,A.nickname,A.regdate,A.read_count,A.user_id FROM board A LEFT JOIN USER B ON A.id=B.id ORDER BY A.id DESC LIMIT ?,?";
+            "SELECT A.id,A.title,A.content,A.nickname,A.regdate,A.read_count,A.user_id,A.group_no,"+
+                    " A.group_seq,A.group_depth FROM board A LEFT JOIN USER B ON A.id=B.id"+
+                    " ORDER BY A.group_no DESC, A.group_seq ASC LIMIT ?,?";
 
     public static final String INSERT =
             "INSERT INTO board (title,user_id,nickname,content) VALUE(?,?,?,?)";
@@ -31,4 +34,12 @@ public class BoardDaoSQL {
     public static final String INSERT_RE =
             "INSERT INTO board (title,user_id,nickname,content,group_no,group_seq,group_depth)" +
                     "value(?,?,?,?,?,?,?)";
+    public static final String SELECT_TOTAL_COUNT =
+            "SELECT COUNT(*) FROM board";
+
+    /*public static final String SELECT_BY_SEARCH_PAGING =
+            "SELECT A.id,A.title,A.content,A.nickname,A.regdate,A.read_count,A.user_id,A.group_no,"+
+                    " A.group_seq,A.group_depth FROM board A LEFT JOIN USER B ON A.id=B.id"+
+                    " WHERE ? LIKE '%제목%'";*/
+                    //"ORDER BY A.group_no DESC, A.group_seq ASC LIMIT ?,?";
 }

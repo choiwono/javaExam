@@ -25,11 +25,16 @@
             #pagenation > ul {
                 display:flex;
             }
-            #point-btn {
+            .point-btn {
                 height:34px;
             }
             .page-link > a {
                 height:34px;
+            }
+            .disabled-atag {
+                pointer-events: none;
+                cursor: default;
+                opacity: 0.6;
             }
 
         </style>
@@ -53,7 +58,12 @@
                             <c:forEach items="${boards}" var="board">
                                 <tr>
                                     <td>${board.id}</td>
-                                    <td><a href="/read?id=${board.id}">${board.title}</a></td>
+                                    <td>
+                                        <c:forEach begin="1" end="${board.groupDepth}">
+                                            <span style="font-weight:700; margin-left:5px; color:#1E90FF">[RE]</span>
+                                        </c:forEach>
+                                        <a href="/read?id=${board.id}">${board.title}</a>
+                                    </td>
                                     <td>${board.name}</td>
                                     <td>${board.regdate}</td>
                                     <td>${board.readCount}</td>
@@ -84,18 +94,41 @@
             </form>
             <nav id="pagenation" aria-label="Page navigation example">
                 <ul style="display:flex;" class="pagination justify-content-end">
-                    <li <c:if test="${page-1 eq 0}">class="page-item disabled"</c:if>>
-                        <a id="point-btn" class="page-link" href="/list?page=${page-1}"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                    </li>
-
+                    <c:if test="${page != 1}">
+                        <li class="page-item">
+                            <a class="point-btn page-link" href="/list?page=1&search=${search}&keyword=${keyword}"><span class="glyphicon glyphicon-backward"></span></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page == 1}">
+                        <li class="page-item disabled">
+                            <a class="point-btn page-link disabled-atag" href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page > 1}">
+                        <li class="page-item">
+                            <a class="point-btn page-link" href="/list?page=${page-1}&search=${search}&keyword=${keyword}"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        </li>
+                    </c:if>
                     <c:forEach var="i" begin="1" end="${totalPage}">
                         <li <c:if test="${i eq page}">class="page-item active"</c:if>>
-                            <a class="page-link" href="/list?page=${i}">${i}</a>
+                            <a class="page-link" href="/list?page=${i}&search=${search}&keyword=${keyword}">${i}</a>
                         </li>
                     </c:forEach>
-                    <li <c:if test="${page eq totalPage}">class="disabled"</c:if>>
-                        <a id="point-btn" class="page-link" href="/list?page=${page+1}"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                    </li>
+                    <c:if test="${page == totalPage}">
+                        <li class="page-item disabled">
+                            <a class="point-btn page-link disabled-atag" href="#"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page < totalPage}">
+                        <li class="page-item">
+                        <a class="point-btn page-link" href="/list?page=${page-1}&search=${search}&keyword=${keyword}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                        </li>
+                    </c:if>
+                    <c:if test="${page != totalPage}">
+                        <li class="page-item">
+                            <a class="point-btn page-link" href="/list?page=${totalPage}&search=${search}&keyword=${keyword}"><span class="glyphicon glyphicon-forward"></span></a>
+                        </li>
+                    </c:if>
                 </ul>
             </nav>
         </div>

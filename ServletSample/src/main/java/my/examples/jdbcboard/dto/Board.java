@@ -11,6 +11,33 @@ public class Board {
     private Date regdate;
     private String email;
     private int readCount;
+    private int groupNo;
+    private int groupSeq;
+    private int groupDepth;
+
+    public int getGroupNo() {
+        return groupNo;
+    }
+
+    public void setGroupNo(int groupNo) {
+        this.groupNo = groupNo;
+    }
+
+    public int getGroupSeq() {
+        return groupSeq;
+    }
+
+    public void setGroupSeq(int groupSeq) {
+        this.groupSeq = groupSeq;
+    }
+
+    public int getGroupDepth() {
+        return groupDepth;
+    }
+
+    public void setGroupDepth(int groupDepth) {
+        this.groupDepth = groupDepth;
+    }
 
     public Board(){
         this.regdate = new Date();

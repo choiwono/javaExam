@@ -36,13 +36,6 @@ public class UserJoinServlet extends HttpServlet{
         String passwd1 = req.getParameter("passwd1");
         String passwd2 = req.getParameter("passwd2");
 
-        // 실제 값을 검사
-        if(name != null && name.length() < 2){
-            resp.sendRedirect("/join?error=babo");
-            return;
-        }
-        // 암호1과 암호2가 같으냐.
-
         PasswordEncoder passwordEncoder =
                 PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
