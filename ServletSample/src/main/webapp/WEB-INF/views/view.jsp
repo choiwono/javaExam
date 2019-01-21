@@ -3,10 +3,6 @@
 <html>
 <head>
     <title>write</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <style>
         #article-heading {
             padding:24px; border-bottom:1px solid #ddd;
@@ -29,6 +25,7 @@
             border:none;
         }
     </style>
+    <%@include file="navbar.jsp"%>
 </head>
 <body>
 <div class="container" style="margin-top:20px;">
@@ -36,10 +33,10 @@
         <div class="col-sm-12 col-sm-offset-0 toppad" >
             <div class="panel panel-default">
                 <div id="article-heading">
-                    <h3 class="article-subject">${list.title}</h3>
+                    <h3 class="article-subject">${board.title}</h3>
                     <div class="article-name">
-                        <span>${list.name}</span>
-                        <span>${list.regdate}</span>
+                        <span>${board.name}</span>
+                        <span>${board.regdate}</span>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -49,15 +46,18 @@
                                 <tbody>
                                 <tr>
                                     <td id="main-content">
-                                        ${list.content}
+                                        ${board.content}
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                             <div class="article-footer">
-                                <a href="/board/list" class="btn btn-primary">목록</a>
-                                <a href="/board/modify" class="btn btn-primary">수정</a>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">삭제</button>
+                                <a href="/list?page=${page}" class="btn btn-primary">목록</a>
+                                <a href="/rewrite?id=${board.id}" class="btn btn-primary">답글</a>
+                                <c:if test="${sessionScope.logininfo.getEmail() eq board.email}">
+                                <a href="/modify?id=${board.id}" class="btn btn-primary">수정</a>
+                                <a href="/delete?id=${board.id}" class="btn btn-primary">삭제</a>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -98,4 +98,5 @@
     </div>
 </div>
 </body>
+<%@include file="footer.jsp"%>
 </html>

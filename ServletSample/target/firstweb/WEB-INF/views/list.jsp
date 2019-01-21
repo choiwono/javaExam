@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Title</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
         <style>
             #keyword {
                 display:inline-table;
@@ -17,7 +17,23 @@
                 color:white;
                 text-decoration:none;
             }
+            #pagenation {
+                display: table;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #pagenation > ul {
+                display:flex;
+            }
+            #point-btn {
+                height:34px;
+            }
+            .page-link > a {
+                height:34px;
+            }
+
         </style>
+        <%@include file="navbar.jsp"%>
     </head>
     <body>
     <div class="container">
@@ -31,15 +47,17 @@
                         <th>제목</th>
                         <th>글쓴이</th>
                         <th>등록일</th>
+                        <th>조회수</th>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.list}" var="board">
-                            <tr>
-                                <td>${board.number}</td>
-                                <td><a href="/board/view?id=${board.number}">${board.title}</a></td>
-                                <td>${board.name}</td>
-                                <td>${board.regdate}</td>
-                            </tr>
+                            <c:forEach items="${boards}" var="board">
+                                <tr>
+                                    <td>${board.id}</td>
+                                    <td><a href="/read?id=${board.id}">${board.title}</a></td>
+                                    <td>${board.name}</td>
+                                    <td>${board.regdate}</td>
+                                    <td>${board.readCount}</td>
+                                </tr>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -47,10 +65,9 @@
             </div>
         </div>
         <div>
-            <form class="form-inline" action="/board/list" method="get">
+            <form class="form-inline" action="/list" method="get">
                 <select name="search" class="form-control" id="inlineFormInput">
-                    <option value="all">전체</option>
-                    <option value="subject">제목</option>
+                    <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
 
@@ -61,25 +78,30 @@
                 <button type="submit" class="btn btn-primary">검색</button>
                 <div class="input-group">
                     <button id="submit" type="button" class="btn btn-primary">
-                        <a href="/board/write">글쓰기</a>
+                        <a href="/write">글쓰기</a>
                     </button>
                 </div>
             </form>
-            <ul class="pagination pull-right">
-                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-            </ul>
+            <nav id="pagenation" aria-label="Page navigation example">
+                <ul style="display:flex;" class="pagination justify-content-end">
+                    <li <c:if test="${page-1 eq 0}">class="page-item disabled"</c:if>>
+                        <a id="point-btn" class="page-link" href="/list?page=${page-1}"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                    </li>
+
+                    <c:forEach var="i" begin="1" end="${totalPage}">
+                        <li <c:if test="${i eq page}">class="page-item active"</c:if>>
+                            <a class="page-link" href="/list?page=${i}">${i}</a>
+                        </li>
+                    </c:forEach>
+                    <li <c:if test="${page eq totalPage}">class="disabled"</c:if>>
+                        <a id="point-btn" class="page-link" href="/list?page=${page+1}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
     </div>
     </div>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     </body>
+    <%@include file="footer.jsp"%>
 </html>
