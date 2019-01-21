@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-@WebFilter(filterName="SecurityFilter", urlPatterns = {"/delete", "/write", "/modify", "/list"})
+@WebFilter(filterName="SecurityFilter", urlPatterns = {"/delete", "/write", "/modify"})
 public class SecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

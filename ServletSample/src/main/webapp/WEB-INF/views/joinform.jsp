@@ -71,6 +71,9 @@
         margin-top: 5px;
     }
 
+    label > .error {
+        color:red;
+    }
 </style>
 <body>
         <div class="container">
